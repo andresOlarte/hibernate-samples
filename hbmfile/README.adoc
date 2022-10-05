@@ -82,8 +82,8 @@ Notas generales del submodulo
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 ----------------
+
 
 * El resto de dependencias pueden incluirse normalmente dentro de *<dependency></dependency>*
 * *Spring Devtools* es preferible no usarlo ya que generara varios problemas:
