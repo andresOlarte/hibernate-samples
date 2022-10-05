@@ -25,7 +25,7 @@ Notas generales del submodulo
 * El parent del submodulo no es *spring-boot-starter-parent*, ya que su pom.xml padre es *com.hibernate.samples* que es el proyecto padre. Las dependencias parent de Spring deben incluirse como *dependencias gestionadas* asi:
 +
 [source,xml]
-----------------
+------------
 	<dependencyManagement>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -36,11 +36,12 @@ Notas generales del submodulo
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-------------------	
-* Derivado del uso, por parte de *Hibernate 6.x*, de la especificacion JakartaEE, es necesario *importar* todas las nuevas dependencias de para el correcto funcionamiento de Hibernate 6 dentro de *<dependencyManagement>*, asi:
+------------
+
+* Derivado del uso, por parte de *Hibernate 6.x*, de la especificacion JakartaEE, es necesario *importar* todas las nuevas dependencias para el correcto funcionamiento de Hibernate 6 dentro de *<dependencyManagement>*, recordar que Spring Boot usa las clases javax y el nuevo Hibernate usa los nuevos paquetes de jakarta.*. Las importaciones las hacemos asi:
 +
 [source,xml]
-----------------
+------------
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -82,7 +83,7 @@ Notas generales del submodulo
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-----------------
+------------
 
 
 * El resto de dependencias pueden incluirse normalmente dentro de *<dependency></dependency>*
