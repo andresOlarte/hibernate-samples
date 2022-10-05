@@ -35,7 +35,7 @@ image::hibernate-2.jpg[]
 +
 con ello han cambiado el xml de cada version. La version anterior es:
 +
-[source,xml]
+[source,python]
 -----------------
 <dependency>
     <groupId>org.hibernate</groupId>
@@ -47,14 +47,15 @@ con ello han cambiado el xml de cada version. La version anterior es:
 +
 La version nueva es: 
 +
-[source,xml]
+[source,python]
 -----------------
 <dependency>
     <groupId>org.hibernate.orm</groupId>
     <artifactId>hibernate-core</artifactId>
     <version>6.1.3.Final</version>
 </dependency>
-------------------
+-----------------
+
 
 * Con la nueva version de Spring Boot 2 muchas de sus dependencias han sido actualizadas. Dichas versiones pueden verse en *https://github.com/spring-projects/spring-boot/blob/2.0.x/spring-boot-project/spring-boot-dependencies/pom.xml[Spring Boot Dependencies^]*
 +
