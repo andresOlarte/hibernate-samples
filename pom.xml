@@ -8,12 +8,7 @@
 	<description>Root Project</description>
 
 	<properties>
-		<maven.compiler.release>11</maven.compiler.release>
-		<jakarta-persistence.version>3.0.0</jakarta-persistence.version>
-		<jakarta-transaction.version>2.0.1</jakarta-transaction.version>
-		<jakarta-activation.version>2.0.1</jakarta-activation.version>
-		<jakarta-xml-bind.version>3.0.1</jakarta-xml-bind.version>
-		<glassfish-jaxb.version>4.0.0</glassfish-jaxb.version>
+		<java.version>9</java.version><!-- Configuracion usada para el spring-maven-plugin-->
 	</properties>
 
 	<modules>
@@ -53,13 +48,16 @@
 
 	</dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>2.7.4</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 </project>

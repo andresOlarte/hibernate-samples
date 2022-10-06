@@ -1,1 +1,5 @@
 com/hibernate/sample/App.class
+com/hibernate/sample/config/Repository.class
+com/hibernate/sample/controller/StudentController.class
+com/hibernate/sample/entities/Student.class
+com/hibernate/sample/config/Database.class
