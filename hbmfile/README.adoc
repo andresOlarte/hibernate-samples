@@ -179,7 +179,81 @@ image::hibernate-3.jpg[]
 +
 hay que tener cuidado con los parametros introducidos, tales como usuario, es *sa* no 'as'. La url de conexion es *jdbc:h2:mem:testdb* no 'jdbc:h2:~/test' al menos en este caso que es una BD en memoria. Finalmente tener cuidado con el dirver *org.h2.Driver*
 
+Notas sobre los ficheros de recursos XML dentro de paquetes java
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* *org.hibernate.MappingNotFoundException: resource: *hbm.xml not found*
+https://stackoverflow.com/questions/7127608/org-hibernate-mappingnotfoundexception-resource-hbm-xml-not-found
++
+*With maven - clean package, xml source files are not included in classpath*
+https://stackoverflow.com/questions/9798955/with-maven-clean-package-xml-source-files-are-not-included-in-classpath
++
+*Issues donde piden anadir al plugin spring-boot la capacidad de indicar configuraciones especificas.*
+https://github.com/spring-projects/spring-boot/issues/1313
++
+*Spring maven plugin*
++
+https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/#goals-run-parameters-details-directories
++
+Inicialmente yo habia creado el paquete: com.hibernate.sample.entities.hbm para guardar alli todos los ficheros
+de mapeo de entidades, en este caso solamente el fichero Student.hbm.xml.
++
+Al ejecutar el proyecto mediante: *mvn spring-boot:run*
++
+Obtenia el error:
++
+*org.hibernate.boot.MappingNotFoundException: Mapping (RESOURCE) not found :*
+*com/hibernate/sample/entities/hbm/Student.hbm.xml : origin(com/hibernate/sample/entities/hbm/Student.hbm.xml)*
++
+Aun cuando las rutas eran correctas Hibernate era incapaz de encontrar el fichero.
++
+Empaquetando el proyecto con *mvn clean package* y revisando el artefacto he podido comprobar que el paquete
+*com.hibernate.sample.entities.hbm* no habia sido creado, basicamente porque maven lo consideraba vacio aunque estuviese
+alli el fichero xml.
++
+El problema surge, porque *maven solo procesa ficheros .java desde las rutas src/main/java*, por lo que colocar dentro
+de un paquete un *fichero hbm.xml* no seria incluido dentro del paquete.
++
+tenemos un par de soluciones aqui:
++
+. Colocar todos los ficheros de recursos que no sean clases java dentro de src/main/resources (recomendado)
+. Anadir al POM.xml los recursos que queremos anadir desde otra ruta que no sea src/main/java (no recomendado)
 
++
+Como ejemplo, he optado para la segunda opcion. Sin embargo anadir los recursos al Pom para que sean anadidos luego
+al paquete no ha sido suficiente. Para poder ejecutar la aplicacion usando el *spring-maven-plugin* es necesario
+indicarle al plugin de Spring donde estan los recursos tambien.
+
++
+De esta forma llegamos a la configuracion de abajo. En la que maven se encarga de incluir los ficheros xml, en este caso,
+desde un paquete, y en spring le indicamos adicionalmente donde buscar los recursos cuando ejecutemos *spring-boot:run*
++
+[source,xml]
+------------
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<directories>
+                            com/hibernate/sample/entities/hbm/
+                        </directories>
+					</configuration>
+			</plugin>
+		</plugins>
+	</build>
+------------
 
 
 Si todo esta bien configurado hibernate funcionara con Spring Boot
