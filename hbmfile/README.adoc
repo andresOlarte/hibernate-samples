@@ -1,3 +1,4 @@
+<<reffile#hbmfile>>
 Spring MVC con Hibernate 6.3.1
 ------------------------------
 
@@ -9,7 +10,7 @@ Este proyecto tiene como objetivo la configuracion de un proyecto hibernate con 
 
 En particular se pretende configurar Hibernate usando:
 
-* Fichero hibernate.cfg.xml
+* Fichero hibernate.cfg.xml <- *Bootstrap propietario de Hibernate t distinto al Bootstrap definido por JakartaEE*
 * Fichero Student.hbm.xml
 
 

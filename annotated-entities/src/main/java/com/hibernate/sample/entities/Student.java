@@ -1,15 +1,21 @@
 package com.hibernate.sample.entities;
 
-import jakarta.persistence.Entity;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 public class Student {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Column(name = "NAME")
 	private String name;
+	@Column(name = "LAST_NAME")
 	private String lastName;
+	@Column(name = "AGE")
 	private Integer age;
 	
 	public Student() {}

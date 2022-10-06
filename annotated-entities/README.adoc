@@ -1,0 +1,51 @@
+Spring MVC con Hibernate 6.3.1
+------------------------------
+
+Este proyecto tiene como objetivo la configuracion de un proyecto hibernate con las siguientes tecnologias:
+
+* Spring Boot 2 - version 2.7.4
+* Hibernate- version 6.1.3 Final
+* Base de datos H2 - version 2.1.214
+
+En particular se pretende configurar Hibernate usando:
+
+* Fichero hibernate.cfg.xml <- *Bootstrap propietario de Hibernate es distinto al Bootstrap definido por JakartaEE*
+* Configuracion mediante anotaciones de las entidades (entities) *(Sin Fichero Student.hbm.xml)*
+
+
+Estructura basica del proyecto
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El proyecto es un sub-modulo de maven que forma parte de un proyecto maven padre *(hb)*. Esto implica ciertas consideraciones que hay que tomar en la configuracion de los proyectos.
+
+
+Notas generales del submodulo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Este submodulo sigue todas las directrices de configuracion del modulo *hbmfile*. A continuacion se describiran las
+diferencias principales de este tipo de configuracion.
+* Tanto el proyecto hmbfile como este proyecto usan un *sistema de arranque de hibernate propietario*. Es decir, no usa el sistema definido dentro de la especificacion, en este caso de JakartaEE.
+
+Diferencias principales de esta configuracion con respecto al proyectoi hbmfile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* No usa un fichero *Studen.hbm.xml*. En su lugar utiliza el sistema de anotaciones dentro de las clases entity
++
+* El fichero *hibernate.cfg.xml* presenta una unica diferencia que tiene que ver con la etiqueta *mapping*. En lugar de incluir
+el atributo *resources* utiliza en su lugar el atributo *class*. De esta manera, en lugar de tener una *ruta* hacia un
+directorio separado por *'/'*, usa en su lugar el FQN (Fully Qualified Name) de la clase. Asi:
++
+[source,xml]
+------------
+        <!-- NOMBRE DE LA ENTITY CLASS ANOTADA -->
+        <mapping class="com.hibernate.sample.entities.Student"/>
+------------
++
+* El resto de configuracion del pom es igual, solo que en este caso no usamos una configuracion adicional para indicar
+directorios de recursos.
+
+Si todo esta bien configurado hibernate funcionara con Spring Boot
+------------------------------------------------------------------
+
+
+
+
