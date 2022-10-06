@@ -82,28 +82,29 @@ Hay planes para sacar una version de *Spring Boot 3 en Noviembre 2023*
 +
 *https://stackoverflow.com/questions/35416308/class-loading-error-with-spring-boot-and-hibernate-5[(Class loading error with Spring Boot and Hibernate 5)^]*
 
-* *Nota sobre la version de Java en el Pom.* A pesar de estar trabajando con una version de Java 11, la definicion de la version de java mediante:
+* *Nota sobre la version de Java en el Pom.* A pesar de estar trabajando con una version de Java 11, no ha funcionado la definicion de la version de java mediante:
++
+[source,xml]
+-------------
+<properties>
+    <maven.compiler.release>11</maven.compiler.release>
+</properties>
+-------------
++
+Tampoco ha funcionado agregar las propiedades para definir la version de java para el *spring-boot-maven-plugin*:
 +
 [source,xml]
 ------------
 <properties>
-    <maven.compiler.release>11</maven.compiler.release>
+    <java.version>11</java.version>
 </properties>
 ------------
-
 +
- No ha funcionado!. Ni con *maven-compiler-plugin* ni con *spring-boot-maven-plugin*. Las unicas configuraciones que han funcionado han sido:
-. *maven-compiler-plugin*: 
+La unica configuracion que ha funcionado ha sido:
 +
-[source,xml] 
--------------
-<properties>
-	<java.version>11</java.version>
-</properties>
-------------------------------
-. *spring-boot-maven-plugin*:
+. *maven-compiler-plugin:*
 +
-[source,xml] 
+[source,xml]
 -------------
 <properties>
 	<maven.compiler.target>11</maven.compiler.target>

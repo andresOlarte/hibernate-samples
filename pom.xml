@@ -7,9 +7,10 @@
 	<name>Hibernate sample parent</name>
 	<description>Root Project</description>
 
-	<properties>
-		<java.version>9</java.version><!-- Configuracion usada para el spring-maven-plugin-->
-	</properties>
+    <properties>
+		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+    </properties>
 
 	<modules>
 		<module>hbmfile</module>
