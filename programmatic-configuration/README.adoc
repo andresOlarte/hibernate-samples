@@ -28,6 +28,19 @@ Notas generales del submodulo
 . Implementar la interfaz *PersistenceUnitInfo*
 . Invocar al metodo *HibernatePersistenceProvider#createContainerEntityManagerFactory*, clave fundamental para conseguir nuestro objetivo: Olvidarnos de ficheros XML.
 . Finalmente, usaremos Reflection para filtrar aquellas clases anotadas como *@Entity* para facilitar esta configuracion.
+
+Documentacion
+~~~~~~~~~~~~~
+. https://github.com/andresOlarte/high-performance-java-persistence/blob/master/core/src/test/java/com/vladmihalcea/book/hpjp/util/PersistenceUnitInfoImpl.java[Add JPA bootstrap test (Vladmihalcea)]
+. https://vladmihalcea.com/how-to-bootstrap-hibernate-without-the-persistence-xml-file/[How to bootstrap Hibernate without the persistence.xml file]
+. https://jakarta.ee/specifications/persistence/3.1/jakarta-persistence-spec-3.1.pdf[jakarta.persistence.spi.PersistenceUnitInfo
+Interface]
+. https://stackoverflow.com/questions/17331024/persistence-xml-different-transaction-type-attributes[persistence.xml different transaction-type attributes]
+. https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#bootstrap-jpa[If you don’t want to provide a persistence.xml configuration file]
+
+
+Caracteristicas comunes entre los otros submodulos de este proyecto
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * El parent del submodulo no es *spring-boot-starter-parent*, ya que su pom.xml padre es *com.hibernate.samples* que es el proyecto padre. Las dependencias parent de Spring deben incluirse como *dependencias gestionadas* asi:
 +
 [source,xml]
