@@ -1,0 +1,5 @@
+com/jakarta/jpa/sample/App.class
+com/jakarta/jpa/sample/config/Database.class
+com/jakarta/jpa/sample/config/Repository.class
+com/jakarta/jpa/sample/entities/Student.class
+com/jakarta/jpa/sample/controller/StudentController.class

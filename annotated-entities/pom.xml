@@ -10,7 +10,6 @@
 	<artifactId>annotated-entities</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>annotated-entities</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 	</properties>

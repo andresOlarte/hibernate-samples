@@ -1,0 +1,44 @@
+Spring MVC con Hibernate 6.3.1 - Jakarta Bootstrap
+--------------------------------------------------
+
+Este proyecto tiene como objetivo la configuracion de un proyecto hibernate con las siguientes tecnologias:
+
+* Spring Boot 2 - version 2.7.4
+* Hibernate- version 6.1.3 Final
+* Base de datos H2 - version 2.1.214
+
+[regular]#*<<La configuracion implementada en este ejemplo es especifica para entornos Java SE no para entornos JavaEE ni JakartaEE. No usa la injeccion de Unidades de Persistencia gestionadas por el contenedor. Aunque usa Spring Boot este solo es usado para permitir el desarrollo de un MVC que permita invocar endpoints de prueba y no para usar el contenedor como parte de la configuracion de JPA>>*#
+
+*En particular se pretende configurar Hibernate usando:*
+
+* *El bootstrap definido en la especificacion JakartaEE*
+* Configuracion mediante anotaciones de las entidades (entities) *(Sin Fichero Student.hbm.xml)*
+
+
+Estructura basica del proyecto
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El proyecto es un sub-modulo de maven que forma parte de un proyecto maven padre *(hb)*. Esto implica ciertas consideraciones que hay que tomar en la configuracion de los proyectos.
+
+
+Notas generales del submodulo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Este submodulo sigue todas las directrices de configuracion del modulo *hbmfile*. A continuacion se describiran las
+diferencias principales de este tipo de configuracion.
+* *Jakarta Persistence* define un processo de bootstrap diferente que usa su propio fichero de persistencia llamado *persistence.xml*. Este proceso de *bootstrapping* esta difinido por la especificacion de *Jakarta Persistence*. En entornos Java SE es requerimiento ubicar todos los ficheros de configuracion dentro de META-INF/ para que pueda ser accedido por el *classpath lookup*.
+* Como nota adicional, cabe destacar que en proyectos maven la carpeta META-INF/ se anade dentro de /src/main/resources
+
+Diferencias principales de esta configuracion con respecto al proyectoi hbmfile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* No usa un fichero *Studen.hbm.xml*. En su lugar utiliza el sistema de anotaciones dentro de las clases entity
++
+* El resto de configuracion del pom es igual, solo que en este caso no usamos una configuracion adicional para indicar
+directorios de recursos.
+
+Si todo esta bien configurado hibernate funcionara con Spring Boot
+------------------------------------------------------------------
+
+
+
+
