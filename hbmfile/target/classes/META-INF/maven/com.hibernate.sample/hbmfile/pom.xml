@@ -1,0 +1,159 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hibernate.sample</groupId>
+	<artifactId>hbmfile</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>com.hibernate.samples</groupId>
+		<artifactId>hibernate-samples</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<properties>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>jakarta.persistence</groupId>
+				<artifactId>jakarta.persistence-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jakarta.transaction</groupId>
+				<artifactId>jakarta.transaction-api</artifactId>
+				<version>2.0.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jakarta.xml.bind</groupId>
+				<artifactId>jakarta.xml.bind-api</artifactId>
+				<version>4.0.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.jaxb</groupId>
+				<artifactId>jaxb-runtime</artifactId>
+				<version>4.0.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jakarta.activation</groupId>
+				<artifactId>jakarta.activation-api</artifactId>
+				<version>2.1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.7.4</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--
+		https://stackoverflow.com/questions/73257636/using-hibernate-6-x-with-spring-boot-2-7-x-not-working
+		7
+
+			Hibernate 6 uses the JPA version (JPA 3) that uses the jakarta.persistence 
+			package names introduced in JakartaEE 9. Spring Boot still uses the javax.* 
+			package namespace of JakartaEE 8 and earlier (JPA 2.2 and earlier), and thus 
+			only supports Hibernate 5.x (for Spring Boot 2.7, Hibernate 5.6.x is the 
+			default).
+			
+			You will need to wait for Spring Boot 3, which switches to the jakarta.* 
+			packages of JakartaEE 9+, before you can use Hibernate 6. Until that time, 
+			you'll need to use Hibernate 5.6.
+		
+		dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency-->
+
+
+	</dependencies>
+
+	<!--
+	org.hibernate.MappingNotFoundException: resource: *hbm.xml not found
+	https://stackoverflow.com/questions/7127608/org-hibernate-mappingnotfoundexception-resource-hbm-xml-not-found
+
+	With maven - clean package, xml source files are not included in classpath
+	https://stackoverflow.com/questions/9798955/with-maven-clean-package-xml-source-files-are-not-included-in-classpath
+
+	Issues donde piden anadir al plugin spring-boot la capacidad de indicar configuraciones especificas.
+	https://github.com/spring-projects/spring-boot/issues/1313
+
+	Inicialmente yo habia creado el paquete: com.hibernate.sample.entities.hbm para guardar alli todos los ficheros
+	de mapeo de entidades, en este caso solamente el fichero Student.hbm.xml.
+
+	Al ejecutar el proyecto mediante> mvn spring-boot:run
+
+	Obtenia el error:
+
+	org.hibernate.boot.MappingNotFoundException: Mapping (RESOURCE) not found :
+	com/hibernate/sample/entities/hbm/Student.hbm.xml : origin(com/hibernate/sample/entities/hbm/Student.hbm.xml)
+
+	Aun cuando las rutas eran correctas Hibernate era incapaz de encontrar el fichero.
+
+	Empaquetando el proyecto con "mvn clean package" y revisando el artefacto he podido comprobar que el paquete
+	com.hibernate.sample.entities.hbm no habia sido creado, basicamente porque maven lo consideraba vacio aunque estuviese
+	alli el fichero xml.
+
+	El problema surge, porque maven solo procesa ficheros .java desde las rutas src/main/java, por lo que colocar dentro
+	de un paquete un fichero hbm.xml no seria incluido dentro del paquete.
+
+	tenemos un par de soluciones aqui:
+
+	1- Colocar todos los ficheros de recursos que no sean clases java dentro de src/main/resources (recomendado)
+	2- Anadir al POM.xml los recursos que queremos anadir desde otra ruta que no sea src/main/java (no recomendado)
+
+	Como ejemplo, he optado para la segunda opcion. Sin embargo anadir los recursos al Pom para que sean anadidos luego
+	al paquete no ha sido suficiente para poder ejecutar la aplicacion usando el spring-maven-plugin. Es necesario
+	indicarle al plugin de Spring donde estan los recursos tambien.
+
+	De esta forma tenemos la configuracion de abajo. En la que maven se encarga de incluir los ficheros xml, en este caso,
+	desde un paquete, y en spring le indicamos adicionalmente donde buscar los recursos cuando ejecutemos spring-boot:run
+	-->
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<directories>com/hibernate/sample/entities/hbm/</directories>
+					</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
