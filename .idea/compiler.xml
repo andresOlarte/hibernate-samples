@@ -8,9 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="annotated-entities" />
+        <module name="prueba" />
         <module name="jakarta-bootstrap" />
         <module name="programmatic-configuration" />
         <module name="hbmfile" />
+        <module name="container-based" />
       </profile>
     </annotationProcessing>
   </component>
